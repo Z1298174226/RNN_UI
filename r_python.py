@@ -46,6 +46,12 @@ data_from = 0
 global data_to
 data_to = 2000
 
+global data_from_column
+data_from_column = 1
+
+global data_to_column
+data_to_column = 1
+
 global dataset
 dataset = []
 
@@ -90,11 +96,11 @@ def load_dataset():
 
 # Pages
 tabControl = ttk.Notebook(root)
-tab1 = ttk.Frame(tabControl)
-tabControl.add(tab1, text='PARAMETER CONTROL')
-tabControl.pack(expand=1, fill='both')
 tab2 = ttk.Frame(tabControl)
 tabControl.add(tab2, text='DATA LOAD')
+tabControl.pack(expand=1, fill='both')
+tab1 = ttk.Frame(tabControl)
+tabControl.add(tab1, text='PARAMETER CONTROL')
 tabControl.pack(expand=1, fill='both')
 
 # tags
@@ -154,11 +160,19 @@ var_loss_func = StringVar()
 # Parameters4
 var_data_from = StringVar()
 var_data_from.set(data_from)
-text_adam_lr_label = StringVar()
+text_data_from = StringVar()
 
 var_data_to = StringVar()
 var_data_to.set(data_to)
 text_data_to = StringVar()
+
+var_data_from_column = StringVar()
+var_data_from_column.set(data_from_column)
+text_data_from_column = StringVar()
+
+var_data_to_column = StringVar()
+var_data_to_column.set(data_to_column)
+text_data_to_column = StringVar()
 
 var_adam_lr = StringVar()
 var_adam_lr.set(adam_lr)
@@ -220,11 +234,11 @@ entry_data_to = Entry(monty4, textvariable=var_data_to, width=10, validate='key'
 lb1 = Label(monty4, text='To', width=13).grid(row=1, column=1, pady=5)
 
 # Entry 4
-entry_data_from_column = Entry(monty6, textvariable=var_data_from, width=10, validate='key',
+entry_data_from_column = Entry(monty6, textvariable=var_data_from_column, width=10, validate='key',
                                validatecommand=(show_com, '%P')).grid(row=0, column=2, pady=5)
 lb1 = Label(monty6, text='From', width=13).grid(row=0, column=1, pady=5)
 
-entry_data_to_column = Entry(monty6, textvariable=var_data_to, width=10, validate='key',
+entry_data_to_column = Entry(monty6, textvariable=var_data_to_column, width=10, validate='key',
                              validatecommand=(show_com, '%P')).grid(row=1, column=2, pady=5)
 lb1 = Label(monty6, text='To', width=13).grid(row=1, column=1, pady=5)
 
@@ -341,6 +355,8 @@ def training():
     fig = plt.figure(0)
     # plt.plot(range(168),y_test[0],'ro-')
     # plt.plot(range(168),trainpredict[0],'g*:')
+    #
+
     plt.plot(range(unit3), y_test[0], 'ro-')
     plt.plot(range(unit3), trainpredict[0], 'g*:')
     plt.legend(('real', 'pred'), loc='upper right')
@@ -348,6 +364,9 @@ def training():
     plt.clf()
 
     fig = plt.figure(1)
+    plt.title("Intend Perception Accuracy", fontproperties="Times New Roman")
+    plt.ylabel("Intend Encode", fontproperties="Times New Roman")
+    plt.xlabel("Epoch", fontproperties="Times New Roman")
     plt.plot(range(timestep + unit3), y_test[:, 0], 'ro-')
     plt.plot(range(timestep + unit3), trainpredict[:, 0], 'g*:')
     plt.legend(('real', 'pred'), loc='upper right')
